@@ -1,0 +1,251 @@
+/* reset style */
+html, body, div, header, section, article, footer, nav, aside, figure, hgroup, h1, h2, h3, h4, h5, h6, p, menu, ul, ol, li, dl, dt, dd, img, a, small, strong, em, b, i, span, label, legend, hr, br, fieldset, sub, sup {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    color: #313131;
+    font-size: 14px;
+    font-family: "Helvetica-Neue", Helvetica, sans-serif, Arial, sans-serif;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    display: block;
+    border: 0;
+    text-decoration: none;
+}
+
+img {
+    border: 0;
+    display: block;
+}
+
+:focus {
+    outline: 0;
+}
+
+button, input, textarea {
+    border: none;
+}
+
+textarea{
+    resize: none;
+    -webkit-appearance: none;
+}
+input{
+    -webkit-appearance: none;
+}
+select {
+    -webkit-appearance: none;
+    background-color: #fff;
+}
+
+/* common style */
+/* fontColor */
+/* bgColor */
+
+.clear {
+    zoom: 1;
+    &:before, &:after {
+        content: '';
+        display: table;
+        clear: both;
+    };
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #d1d1d1;
+}
+
+#app{
+    height: 100%;
+    background: #fff;
+}
+
+.avator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.font-ellip {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.center {
+    text-align: center;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.pt8 {
+    padding-top: 8px;
+}
+
+.fw4 {
+    font-weight: 400;
+}
+
+.fw7 {
+    font-weight: 700;
+}
+
+.good {
+    background: #1ABC9C;
+}
+.top {
+    background: #80bd01;
+}
+.ask {
+    background: #6b71ef;
+}
+.share {
+    background: #e07048; 
+}
+.job {
+    background: #9b59b6;
+}
+.default {
+    background: #eee;
+}
+
+/* compatible flex */
+.flex {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flexbox;
+    display: flex;
+}
+
+.flex-center {
+    -webkit-box-pack: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.flex-middle {
+    -webkit-box-align: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.flex-around {
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+}
+
+.flex-left {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    flex-direction: row;
+}
+
+.flex-right {
+    -webkit-box-pack: end;
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: horizontal;
+    -moz-flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+}
+
+.flex-between {
+    @extend .flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.flex-baseline {
+    -webkit-box-align: baseline;
+    -webkit-align-items: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+}
+
+.flex-strech {
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+}
+
+/*   水平两端对齐,垂直居中   */
+.align-to-both {
+    @extend .flex;
+    @extend .flex-between;
+    @extend .flex-middle;
+}
+
+/*   水平垂直居中   */
+.align-to-center {
+    @extend .flex;
+    @extend .flex-center;
+    @extend .flex-middle;
+}
+
+/*   水平垂直居中   */
+.align-to-around {
+    @extend .flex;
+    @extend .flex-around;
+    @extend .flex-middle;
+}
+
+.flex1 {
+    -webkit-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex: 1;
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    flex: 1;
+}
+
+.align-justify {
+    -moz-box-align: justify-content;
+    -ms-flex-align: align-content;
+    -ms-flex-item-align: justify-content;
+    -webkit-box-align: justify-content;
+    /*老语法*/
+    -webkit-align-items: justify-content;
+    /*新语法*/
+    align-content: justify-content;
+    align-items: justify-content;
+    justify-content: justify-content;
+}
+
+@mixin flex-shrink($value: 0) {
+    -webkit-box-flex: #{$value}.0;
+    -moz-flex-shrink: $value;
+    -webkit-flex-shrink: $value;
+    flex-shrink: $value;
+}
+
+@mixin flex-grow($value: 1) {
+    -webkit-box-flex: #{$value}.0;
+    -moz-flex-grow: $value;
+    -webkit-flex-grow: $value;
+    flex-grow: $value;
+}
