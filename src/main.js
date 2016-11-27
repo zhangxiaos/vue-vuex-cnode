@@ -1,15 +1,17 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import filters from 'assets/js/filters'
+import store from './store/index'
 import 'assets/css/common.scss'
 import 'assets/css/iconfont.css'
 
+Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
-console.log(Vue.filter());
 
 Vue.mixin({
 	http: {
@@ -17,19 +19,17 @@ Vue.mixin({
 	}
 })
 
-import Hello from 'components/Hello'
-import Nihao from 'components/index'
-
 const router = new VueRouter({
 	hashbang: false,
 	mode: 'history',
 	routes: [
-		{ path: '/hello', component: Hello },
-		{ path: '/', component: Nihao }
+		{ path: '/', component: resolve => require(['components/index'], resolve) }
 	]
 })
 
 const app = new Vue({
-  router
+	store,
+    router
 }).$mount('#app')
+
 

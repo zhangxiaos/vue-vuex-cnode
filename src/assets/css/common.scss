@@ -15,6 +15,10 @@ html, body {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+[v-cloak] {
+  display: none;
+}
+
 li{
     list-style: none;
 }
@@ -116,6 +120,7 @@ textarea::-webkit-input-placeholder {
 }
 .share {
     background: #e07048; 
+    // background: red; 
 }
 .job {
     background: #9b59b6;

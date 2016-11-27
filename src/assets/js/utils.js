@@ -26,7 +26,7 @@ const fmtDate = function(date, fmt) { //author: meizz
 
 
 /**
- * 由于moment库加进来太大了，自定义了formnow函数，待完善阶段
+ * 由于moment库加进来太大了，自定义了fromnow函数，待完善阶段
  */
 const MillisecondToDate = function(msd) {
     var time = parseFloat(msd) / 1000;
