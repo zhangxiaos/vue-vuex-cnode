@@ -1,10 +1,13 @@
 <template>
 	<div class="list-container">
-		<header-component></header-component>
+		<header-component v-on:changeTab="getTab"></header-component>
 		<div ref="wrap" v-on:scroll="scrollHandle" class="topic-wrap">
-			<ul ref="box">
-				<li class="topic-item"
-					v-for="topic in topics">
+			<div ref="box">
+				<router-link class="topic-item"
+					v-for="topic in topics" 
+					:to="'/topic/'+topic.id"
+					:key="topic.id"
+					tag="a">
 
 					<div class="flex-between">
 						<span class="topic-type mr10" 
@@ -15,7 +18,7 @@
 						<h3 class="topic-title flex1 font-ellip">{{ topic.title }}</h3>
 					</div>
 					<div class="flex pt8">
-						<img class="avator user-avator mr10" :src="topic.author.avatar_url">
+						<img class="avatar user-avatar mr10" :src="topic.author.avatar_url">
 						<div class="info flex1">
 							<p class="flex-between">
 								<span class="author">{{ topic.author.loginname }}</span>
@@ -27,8 +30,8 @@
 							</p>
 						</div>
 					</div>
-				</li>
-			</ul>
+				</router-link>
+			</div>
 		</div>
 	</div>
 </template>
@@ -43,31 +46,42 @@
 		data () {
 			return {
 				topics: [],
-				page: 1,
-				limit: 20
+				params: {
+					page: 1,
+					limit: 20,
+					tab: 'all'
+				}
 			}
 		},
 		mounted () {
-			this.getData();		
+			this.getData();	
 		},
 		methods: {
+			getTab (tab) {
+				this.params.page = 1;
+				this.params.tab = tab;
+				this.$refs.wrap.scrollTop = 0;
+
+				this.getFilterData();	
+			},
 			scrollHandle () {
 				let winH = this.$refs.wrap.offsetHeight;
 				let conH = this.$refs.box.offsetHeight;
 
 				if (this.$refs.wrap.scrollTop + winH == conH + 50) {
-					this.page++;
+					this.params.page++;
 					setTimeout(() => {
 						this.getData();
-					}, 200);
+					}, 100);
 				}
 			},
+			getFilterData () {
+				this.$http.get('topics', {params: this.params}).then((res) => {
+					this.topics = res.data.data;
+				})
+			},
 			getData () {
-				let params = {
-					page: this.page,
-					limit: this.limit
-				}
-				this.$http.get('topics', {params}).then((res) => {
+				this.$http.get('topics', {params: this.params}).then((res) => {
 					this.topics = this.topics.concat(res.data.data);
 				})
 			},
@@ -108,10 +122,12 @@
 		padding-top: 50px;
 		height: 100%;
 		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		overflow-scrolling: touch;
 	}
 	.topic-item {
 		padding: 10px 15px;
-		border-bottom: 1px solid #d5dbdb;
+		border-bottom: 1px solid #f0f0f0;
 	}
 	.topic-type {
 		padding: 3px 7px;

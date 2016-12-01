@@ -6,6 +6,7 @@ import filters from 'assets/js/filters'
 import store from './store/index'
 import 'assets/css/common.scss'
 import 'assets/css/iconfont.css'
+import 'github-markdown-css'
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -20,10 +21,18 @@ Vue.mixin({
 })
 
 const router = new VueRouter({
-	hashbang: false,
 	mode: 'history',
+	saveScrollPosition: true,
+	// scrollBehavior (to, from, savedPosition) {
+	//     if (savedPosition) {
+	//     	return savedPosition;
+	//     } else {
+	//     	return { x: 0, y: 0 };
+	//     }
+	// },
 	routes: [
-		{ path: '/', component: resolve => require(['components/index'], resolve) }
+		{ path: '/', component: resolve => require(['components/index'], resolve) },
+		{ path: '/topic/:id', component: resolve => require(['components/topic'], resolve) }
 	]
 })
 
