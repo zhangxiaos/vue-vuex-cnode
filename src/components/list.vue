@@ -6,8 +6,7 @@
 				<router-link class="topic-item"
 					v-for="topic in topics" 
 					:to="'/topic/'+topic.id"
-					:key="topic.id"
-					tag="a">
+					:key="topic.id">
 
 					<div class="flex-between">
 						<span class="topic-type mr10" 
@@ -38,28 +37,33 @@
 
 <script>
 	import HeaderComponent from './partials/header'
+	import { mapState } from 'vuex'
 
 	export default {
 		components: {
 			HeaderComponent
 		},
+		computed: {
+			...mapState({
+				params: state => state.list.params
+			})
+		},
 		data () {
 			return {
-				topics: [],
-				params: {
-					page: 1,
-					limit: 20,
-					tab: 'all'
-				}
+				topics: []
 			}
 		},
 		mounted () {
-			this.getData();	
+			// this.$store.dispatch('getTopics');
+
+			this.getData().then(() => {
+				this.$refs.wrap.scrollTop = parseInt(localStorage.getItem('y'));
+			});	
+			
 		},
 		methods: {
 			getTab (tab) {
-				this.params.page = 1;
-				this.params.tab = tab;
+				this.$store.dispatch('changeParams', tab);
 				this.$refs.wrap.scrollTop = 0;
 
 				this.getFilterData();	
@@ -67,12 +71,16 @@
 			scrollHandle () {
 				let winH = this.$refs.wrap.offsetHeight;
 				let conH = this.$refs.box.offsetHeight;
+				let y    = this.$refs.wrap.scrollTop;
+
+				localStorage.setItem('y', y);
 
 				if (this.$refs.wrap.scrollTop + winH == conH + 50) {
-					this.params.page++;
+					this.$store.dispatch('addPage');
+
 					setTimeout(() => {
 						this.getData();
-					}, 100);
+					}, 50);
 				}
 			},
 			getFilterData () {
@@ -81,7 +89,7 @@
 				})
 			},
 			getData () {
-				this.$http.get('topics', {params: this.params}).then((res) => {
+				return this.$http.get('topics', {params: this.params}).then((res) => {
 					this.topics = this.topics.concat(res.data.data);
 				})
 			},

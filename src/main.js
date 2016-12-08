@@ -12,27 +12,45 @@ Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
-
 Vue.mixin({
 	http: {
 		root: 'https://cnodejs.org/api/v1'
 	}
 })
 
+Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
+
+const scrollBehavior = (to, from, savedPosition) => {
+	console.log(to, from, savedPosition);
+	if (savedPosition) {
+		return savedPosition;
+	}
+	else {
+		const position = {};
+
+		if (to.hash) {
+			position.selector = to.hash;
+		}
+		if (to.matched.some(m => m.meta.scrollToTop)) {
+			position.x = 0;
+			position.y = 0;
+		}
+
+		return position;
+	}
+}
+
+const List = resolve => require(['components/list'], resolve)
+const Topic = resolve => require(['components/topic'], resolve)
+
 const router = new VueRouter({
 	mode: 'history',
-	saveScrollPosition: true,
-	// scrollBehavior (to, from, savedPosition) {
-	//     if (savedPosition) {
-	//     	return savedPosition;
-	//     } else {
-	//     	return { x: 0, y: 0 };
-	//     }
-	// },
+	// saveScrollPosition: true,
+	// scrollBehavior,
 	routes: [
-		{ path: '/', component: resolve => require(['components/index'], resolve) },
-		{ path: '/topic/:id', component: resolve => require(['components/topic'], resolve) }
+		{ path: '/', component: List },
+		{ path: '/topic/:id', component: Topic },
+		{ path: '/test', component: resolve => require(['components/test'], resolve) }
 	]
 })
 

@@ -12,33 +12,23 @@
 </template>
 
 <script>
+	import Bus from 'assets/js/bus'
+	import { mapState } from 'vuex'
+	import { mapGetters } from 'vuex'
+	import { mapMutations } from 'vuex'
+
 	export default {
-		data () {
-			return {
-				isCur: 0,
-				types: [{
-						tab: 'all', 
-						name: '全部'
-					},{
-						tab: 'good', 
-						name: '精华'
-					},{
-						tab: 'share', 
-						name: '分享'
-					},{
-						tab: 'ask', 
-						name: '问答'
-					},{
-						tab: 'job', 
-						name: '招聘'
-				}]
-			}
+		computed: {
+			...mapState({
+				isCur: state => state.list.isCur,
+				types: state => state.list.types,
+			})
 		},
 		methods: {
 			changeTab (index, tab) {
-				this.isCur = index;
+				this.$store.dispatch('setCur', index);
 				this.$emit('changeTab', tab);
-			} 
+			}
 		}
 	}
 </script>
